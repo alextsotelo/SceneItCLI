@@ -17,7 +17,7 @@ public class ConsoleUI {
 
     private void displayMenu() {
         System.out.print("""
-                ========== SceneIt ==========
+                ========== Sceneit Main Menu ==========
                 View:
                     1. Want to Watch
                     2. Watched
@@ -74,7 +74,6 @@ public class ConsoleUI {
             } else {
                 return entries.get(choice - 1);
             }
-
         }
     }
 
@@ -82,6 +81,7 @@ public class ConsoleUI {
     private void viewDetails() {
         List<Media> entries = manager.getMediaList();
         Media media = selectMedia(entries);
+        System.out.println();
 
         if (media == null) {
             return;
@@ -98,7 +98,7 @@ public class ConsoleUI {
         }
 
         if (!media.getNotes().isEmpty()) {
-            System.out.println("Notes: " + media.getNotes());
+            System.out.println("Notes: " + media.getNotes() + "\n");
         }
     }
     
@@ -106,16 +106,18 @@ public class ConsoleUI {
     private void viewSceneIt() {
         List<Media> sceneIts = manager.getSceneIts();
         Media media = selectMedia(sceneIts);
+        System.out.println();
 
         if (media == null) {
             return;
         }
 
-        System.out.println(media.getTitle() + " (" + media.getReleaseYear() + ")");
+        System.out.println("Title: " + media.getTitle() + " (" + media.getReleaseYear() + ")");
         System.out.println("Genres: " + String.join(", ", media.getGenres()));
         System.out.println("Rating: " + media.getRating() + " / 5");
         System.out.println("Favorite scene:");
         System.out.println(media.getFavoriteScene().getDescription());
+        System.out.println();
     }
 
     // Both add options share their input flow; only Watched requires a rating.
@@ -231,7 +233,7 @@ public class ConsoleUI {
                 }
             }
 
-            System.out.println("Editing complete. Use Save to keep your changes.");
+            System.out.println("Editing complete. Use Save to keep your changes.\n");
         } catch (IllegalArgumentException ex) {
             System.out.println("Invalid value: " + ex.getMessage());
             System.out.println("Any earlier valid edits have been kept.");
@@ -255,7 +257,7 @@ public class ConsoleUI {
                 double rating = Double.parseDouble(ratingText);
                 media.markWatched(rating);
                 System.out.println(media.getTitle()
-                        + " marked as Watched. Use Save to keep your changes.");
+                        + " marked as Watched. Use Save to keep your changes.\n");
                 return;
             } catch (IllegalArgumentException ex) {
                 System.out.println("Please enter a rating from 1 to 5.");
@@ -287,7 +289,7 @@ public class ConsoleUI {
 
             try {
                 media.setFavoriteScene(new FavoriteScene(description));
-                System.out.println("SceneIt added. Use Save to keep your changes.");
+                System.out.println("SceneIt added. Use Save to keep your changes.\n");
                 return;
             } catch (IllegalArgumentException ex) {
                 System.out.println(ex.getMessage());
@@ -314,7 +316,7 @@ public class ConsoleUI {
         }
 
         scene.setDescription(description);
-        System.out.println("SceneIt updated. Use Save to keep your changes.");
+        System.out.println("SceneIt updated. Use Save to keep your changes.\n");
     }
 
     /** Removes only the scene, preserving its owner, rating, and general notes. */
@@ -325,7 +327,7 @@ public class ConsoleUI {
         }
 
         media.removeFavoriteScene();
-        System.out.println("SceneIt removed. Use Save to keep your changes.");
+        System.out.println("SceneIt removed. Use Save to keep your changes.\n");
     }
 
     /** Removes the owner; saving also omits its scene from scenes.csv. */
@@ -338,14 +340,14 @@ public class ConsoleUI {
 
         manager.removeMedia(media);
         System.out.println(media.getTitle()
-                + " deleted. Use Save to keep your changes.");
+                + " deleted. Use Save to keep your changes.\n");
     }
 
     /** Returns success so Save & Exit keeps running when saving fails. */
     private boolean saveChanges() {
         try {
             storage.save(manager);
-            System.out.println("Changes saved successfully.");
+            System.out.println("Changes saved successfully.\n");
             return true;
         } catch (java.io.IOException ex) {
             System.out.println("Could not save changes: " + ex.getMessage());
@@ -375,40 +377,54 @@ public class ConsoleUI {
             switch(choice) {
                 case 1:
                     List<Media> wantToWatchList = manager.getByStatus(WatchStatus.WANT_TO_WATCH);
+                    System.out.println("\n========== Want to Watch List ==========");
                     displayMediaList(wantToWatchList);
+                    System.out.println();
                     break;
                 case 2:
                     List<Media> watchedList = manager.getByStatus(WatchStatus.WATCHED);
+                    System.out.println("\n========== Watched List ==========");
                     displayMediaList(watchedList);
+                    System.out.println();
                     break;
                 case 3:
+                    System.out.println("\n========== Select Sceneit to View ==========");
                     viewSceneIt();
                     break;
                 case 4:
+                    System.out.println("\n========== Select Entry to View Details ==========");
                     viewDetails();
                     break;
                 case 5:
+                    System.out.println("\n========== Add New Want to Watch ==========");
                     addMedia(WatchStatus.WANT_TO_WATCH);
                     break;
                 case 6:
+                    System.out.println("\n========== Add New Watched ==========");
                     addMedia(WatchStatus.WATCHED);
                     break;
                 case 7:
+                    System.out.println("\n========== Edit Entry ==========");
                     editEntry();
                     break;
                 case 8:
+                    System.out.println("\n========== Mark as Watched ==========");
                     markAsWatched();
                     break;
                 case 9:
+                    System.out.println("\n========== Add Sceneit ==========");
                     addSceneIt();
                     break;
                 case 10:
+                    System.out.println("\n========== Edit Sceneit ==========");
                     editSceneIt();
                     break;
                 case 11:
+                    System.out.println("\n========== Remove Sceneit ==========");
                     removeSceneIt();
                     break;
                 case 12:
+                    System.out.println("\n========== Delete Entry ==========");
                     deleteEntry();
                     break;
                 case 13:

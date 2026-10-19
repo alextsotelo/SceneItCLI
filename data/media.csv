@@ -1,5 +1,4 @@
 id,type,title,releaseYear,genres,watchStatus,rating,notes
-1,MOVIE,The Last Lantern,2024,Adventure|Fantasy,WANT_TO_WATCH,,Recommended by a classmate.
 2,TV_SHOW,Harbor Lights Season 1,2023,Drama|Mystery,WANT_TO_WATCH,,Try the first episode this weekend.
 3,MOVIE,"Coffee, Rain and Other Plans",2022,Comedy|Romance,WANT_TO_WATCH,,
 4,TV_SHOW,Orbit Academy Season 2,2025,Animation|Sci-fi,WANT_TO_WATCH,,Watch after finishing season one.
@@ -10,4 +9,5 @@ id,type,title,releaseYear,genres,watchStatus,rating,notes
 9,MOVIE,"The ""Almost"" Perfect Heist",2023,Comedy|Crime,WATCHED,4.0,"Funny, clever and easy to rewatch."
 10,TV_SHOW,Riverstone Season 3,2024,Adventure|Fantasy,WATCHED,5.0,
 11,MOVIE,Sunday at the Arcade,2019,Comedy|Family,WATCHED,2.5,Good soundtrack; the story did not work for me.
-12,TV_SHOW,Small Town Stars Season 1,2021,Drama|Music,WATCHED,1.0,
+12,MOVIE,Star Wars Episode X: The Rise of Skywalker,2019,Action|Sci-Fi,WATCHED,1.0,Horrible. Absolutely horrible.
+13,TV_SHOW,Stranger Things Season 3,2019,Sci-Fi|Action,WATCHED,5.0,Loved it!

@@ -15,3 +15,10 @@ public class Main {
         }
     }
 }
+
+/* Things to fix:
+ - How do we go about displaying Notes for viewing "Want to Watch" list? Our current displaying of Want to Watch doesn't show anything
+ - Same goes for viewing "Watched" List
+ - We can view these in "View Entry" but should it work this way or should we change it?
+ */
+
