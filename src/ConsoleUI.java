@@ -3,18 +3,20 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-/** Handles console menus and input while models and storage remain reusable in JavaFX. */
+/** Handles console menus and input */
 public class ConsoleUI {
     private final Manager manager;
     private final CsvStorage storage;
     private final Scanner input;
 
+    /** Uses the loaded collection and storage, plus one Scanner for keyboard input. */
     public ConsoleUI(Manager manager, CsvStorage storage) {
         this.manager = manager;
         this.storage = storage;
         this.input = new Scanner(System.in);
     }
 
+    /** Prints available actions; run() reads the choice and dispatches the action. */
     private void displayMenu() {
         System.out.print("""
                 ========== Sceneit Main Menu ==========
@@ -37,7 +39,7 @@ public class ConsoleUI {
                     14. Save & Exit\n\n""");
     }
 
-    /** Displays titles without exposing the IDs used for storage relationships. */
+    /** Displays the titles for the selected media list (Watched, Want to Watch) */
     private void displayMediaList(List<Media> entries) {
         if (entries.isEmpty()) {
             System.out.println("No media found!");
@@ -51,13 +53,14 @@ public class ConsoleUI {
         }
     }
 
-    /** Returns an existing entry chosen by its displayed list position, or null if empty. */
+    /** Returns an existing entry chosen by its displayed list position */
     private Media selectMedia(List<Media> entries) {
 
         if (entries.isEmpty()) {
             System.out.println("No entries found!");
             return null;
         }
+
 
         for (int i = 0; i < entries.size(); i++) {
             Media media = entries.get(i);
@@ -102,7 +105,7 @@ public class ConsoleUI {
         }
     }
     
-    /** Shows a favorite scene alongside metadata from its owning media entry. */
+    /** Shows SceneIt information (description) alongside general data from its parent media entry. */
     private void viewSceneIt() {
         List<Media> sceneIts = manager.getSceneIts();
         Media media = selectMedia(sceneIts);
@@ -120,7 +123,7 @@ public class ConsoleUI {
         System.out.println();
     }
 
-    // Both add options share their input flow; only Watched requires a rating.
+    /** Collects shared fields for either watch list; only Watched asks for a rating. */
     private void addMedia(WatchStatus status) {
         int type = readInt("1. Movie\n2. TV show/season\nChoose type: ");
         if (type != 1 && type != 2) {
@@ -169,7 +172,7 @@ public class ConsoleUI {
         }
     }
 
-    /** Applies each nonblank field immediately; Enter preserves that field's value. */
+    /** Applies each nonblank field immediately; Enter preserves that field's value (no changes made). */
     private void editEntry() {
         int listChoice = readInt("1. Want to Watch\n2. Watched\nChoose a list: ");
         if (listChoice != 1 && listChoice != 2) {
@@ -297,7 +300,7 @@ public class ConsoleUI {
         }
     }
 
-    /** Edits the existing scene; Enter preserves its current description. */
+    /** Edits the existing scene; Enter preserves its current description (no changes made). */
     private void editSceneIt() {
         Media media = selectMedia(manager.getSceneIts());
 
@@ -330,7 +333,7 @@ public class ConsoleUI {
         System.out.println("SceneIt removed. Use Save to keep your changes.\n");
     }
 
-    /** Removes the owner; saving also omits its scene from scenes.csv. */
+    /** Removes the owner */
     private void deleteEntry() {
         List<Media> mediaList = manager.getMediaList();
         Media media = selectMedia(mediaList);
@@ -343,7 +346,7 @@ public class ConsoleUI {
                 + " deleted. Use Save to keep your changes.\n");
     }
 
-    /** Returns success so Save & Exit keeps running when saving fails. */
+    /** Returns success upon saving successfully */
     private boolean saveChanges() {
         try {
             storage.save(manager);
@@ -368,7 +371,7 @@ public class ConsoleUI {
         }
     }
 
-    /** Dispatches menu choices until Save & Exit succeeds. */
+    /** Begins program and runs the menu choices until Save & Exit succeeds. */
     public void run() {
         while (true) {
             displayMenu();

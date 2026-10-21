@@ -11,3 +11,4 @@ id,type,title,releaseYear,genres,watchStatus,rating,notes
 11,MOVIE,Sunday at the Arcade,2019,Comedy|Family,WATCHED,2.5,Good soundtrack; the story did not work for me.
 12,MOVIE,Star Wars Episode X: The Rise of Skywalker,2019,Action|Sci-Fi,WATCHED,1.0,Horrible. Absolutely horrible.
 13,TV_SHOW,Stranger Things Season 3,2019,Sci-Fi|Action,WATCHED,5.0,Loved it!
+14,MOVIE,Good Boys,2019,Comedy,WANT_TO_WATCH,,"This is a test description, haha"

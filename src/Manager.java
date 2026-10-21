@@ -1,10 +1,11 @@
 import java.util.List;
 import java.util.ArrayList;
 
-/** Owns the media collection and provides lookup and filtered lists for any UI. */
+/** Manages the media collection and provides lookup and filtered lists for UI class. */
 public class Manager {
     private final List<Media> mediaList;
 
+    /** Starts an empty ArrayList to store media objects */
     public Manager() {
         mediaList = new ArrayList<>();
     }
@@ -19,7 +20,7 @@ public class Manager {
         return null;
     }
 
-    /** Chooses an ID above the current maximum rather than using the list size. */
+    /** Chooses an ID above the current maximum to ensure IDs are unique */
     public int getNextId() {
         int highestId = 0;
         for (Media media : mediaList) {
@@ -43,6 +44,7 @@ public class Manager {
         mediaList.add(media);
     }
 
+    /** Removes the stored object */
     public boolean removeMedia(Media media) {
         return mediaList.remove(media);
     }
@@ -52,6 +54,7 @@ public class Manager {
         return new ArrayList<>(mediaList);
     }
 
+    /** Selects a watch list (either Want to Watch or Watched) while retaining references to the original media objects. */
     public List<Media> getByStatus(WatchStatus status) {
         List<Media> result = new ArrayList<>();
         for (Media item : mediaList) {
@@ -62,7 +65,7 @@ public class Manager {
         return result;
     }
 
-    /** SceneIt is optional metadata, not a third mutually exclusive watch status. */
+    /** SceneIt is optional (max of one per entry) */
     public List<Media> getSceneIts() {
         List<Media> result = new ArrayList<>();
 

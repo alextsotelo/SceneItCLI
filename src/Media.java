@@ -1,16 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/** Shared media data and rules, independent of console output and file storage. */
+// Parent abstract class used as a blueprint for Movie & TvShow classes
 public abstract class Media {
+    // The ID stays unchanged so a saved scene continues to reference its owner
     private final int id;
     private String title;
     private int releaseYear;
     private List<String> genres;
     private WatchStatus watchStatus;
-    private Double rating;
+    private Double rating; // null means the entry has not been rated (Want to Watch)
     private String notes;
-    private FavoriteScene favoriteScene;
+    private FavoriteScene favoriteScene; // null means no SceneIt; otherwise one Sceneit per entry
 
     /** Creates a valid entry: Watched requires a rating; Want to Watch requires null. */
     protected Media(int id, String title, int releaseYear, List<String> genres,
@@ -44,7 +45,7 @@ public abstract class Media {
         }
     }
 
-    // Each subclass supplies its own type.
+    // Subclasses supply the type label used when displaying and saving entries
     public abstract String getType();
 
     public int getId() {
@@ -59,7 +60,6 @@ public abstract class Media {
         return releaseYear;
     }
 
-    /** Returns a copy so list changes must pass through genre validation. */
     public List<String> getGenres() {
         return new ArrayList<>(genres);
     }
@@ -68,6 +68,7 @@ public abstract class Media {
         return watchStatus;
     }
 
+    // Returns null for Want to Watch, or the required user rating for Watched
     public Double getRating() {
         return rating;
     }
@@ -76,10 +77,12 @@ public abstract class Media {
         return notes;
     }
 
+    // Returns the optional scene object, or null when the entry has none
     public FavoriteScene getFavoriteScene() {
         return favoriteScene;
     }
 
+    // Rejects missing/blank titles and removes surrounding whitespace
     public void setTitle(String title) {
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException("Title cannot be blank.");
@@ -124,8 +127,7 @@ public abstract class Media {
         }
     }
 
-    // Updates status and rating together, preventing an unrated Watched entry.
-    // Also allows the user to change an existing Watched rating.
+    // Updates status and rating together, preventing an unrated Watched entry
     public void markWatched(double rating) {
         if (!Double.isFinite(rating) || rating < 1.0 || rating > 5.0) {
             throw new IllegalArgumentException(
@@ -136,7 +138,7 @@ public abstract class Media {
         this.watchStatus = WatchStatus.WATCHED;
     }
 
-    // One field means each media item can hold at most one favorite scene.
+    // One field means each media item can hold at most one favorite scene
     public void setFavoriteScene(FavoriteScene favoriteScene) {
         if (watchStatus != WatchStatus.WATCHED) {
             throw new IllegalStateException(
@@ -148,6 +150,7 @@ public abstract class Media {
         this.favoriteScene = favoriteScene;
     }
 
+    // Clears only the scene, preserving watch status, rating, and general notes
     public void removeFavoriteScene() {
         this.favoriteScene = null;
     }
